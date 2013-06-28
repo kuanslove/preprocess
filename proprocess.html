@@ -1,0 +1,79 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<title>untitled</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/cupertino/jquery-ui.css" />
+
+
+	<style>
+		#pics {
+			width:200px;
+			height:200px;
+			border:2px dashed pink;
+			border-radius:15px;
+			padding:5px;
+			text-align:center;
+			margin-left:auto;
+			margin-right:auto;
+		}
+		img {
+			max-width:190px;
+			max-height:190px;			
+		}
+	</style>
+</head>
+
+<body>
+
+<input type="file" id="upload"/>
+<canvas style="border:5px solid purple;" id="preview"></canvas>
+<button id="loadpic">load</button>
+<img id="postpic">
+
+
+
+	<script>
+		window.URL = window.webkitURL || window.URL;
+		var imgdata;
+		jQuery(function($){
+			
+			$("#upload").change(function(){
+				
+				var url = window.URL.createObjectURL(this.files[0]);
+				console.log(url);
+				var pic = new Image();
+				pic.src = url;
+				var canvas = document.getElementById("preview");
+				var ctx = canvas.getContext("2d");
+				pic.onload = function(){
+					var w = 0.1*this.width;
+					var h = 0.1*this.height;
+					canvas.width=w;
+					canvas.height=h;
+					
+					ctx.drawImage(this, 0,0, w,h);
+					imgdata = canvas.toDataURL("image/png");
+					console.log(imgdata);
+				}	
+			});
+			
+			
+			$("#loadpic").click(function(){
+				if(imgdata){
+					$("#postpic").attr("src", imgdata);
+				}	
+			});
+			
+			
+			})
+		
+	</script>
+</body>
+
+</html>
