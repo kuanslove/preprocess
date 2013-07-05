@@ -44,23 +44,25 @@
 		jQuery(function($){
 			
 			$("#upload").change(function(){
-				
-				var url = window.URL.createObjectURL(this.files[0]);
-				console.log(url);
-				var pic = new Image();
-				pic.src = url;
-				var canvas = document.getElementById("preview");
-				var ctx = canvas.getContext("2d");
-				pic.onload = function(){
-					var w = 0.1*this.width;
-					var h = 0.1*this.height;
-					canvas.width=w;
-					canvas.height=h;
-					
-					ctx.drawImage(this, 0,0, w,h);
-					imgdata = canvas.toDataURL("image/png");
-					console.log(imgdata);
-				}	
+				if(this.files[0]!=undefined){
+					var url = window.URL.createObjectURL(this.files[0]);
+					console.log(url);
+					var pic = new Image();
+					pic.src = url;
+					var canvas = document.getElementById("preview");
+					var ctx = canvas.getContext("2d");
+					pic.onload = function(){
+						var w = 2*this.width;
+						var h = 2*this.height;
+						canvas.width=w;
+						canvas.height=h;
+						
+						ctx.drawImage(this, 0,0, w,h);
+						imgdata = canvas.toDataURL("plain/text");
+						console.log("*********:       "+imgdata);
+					}				
+				}
+	
 			});
 			
 			
